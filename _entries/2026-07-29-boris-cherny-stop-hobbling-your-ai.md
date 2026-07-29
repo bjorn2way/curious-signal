@@ -5,7 +5,7 @@ section: Research Summary
 section_slug: research-summary
 description: "Summary: Claude Code & Opus 5 Capabilities Boris from Anthropic"
 audio: /audio/2026/07/boris-cherny-stop-hobbling-your-ai.mp3
-duration: "1 min 27 sec"
+duration: "4 min 41 sec"
 read_time: "6 min"
 primary_source: https://youtu.be/qyPCVqFUyDo?is=chXUjtghIbgjJqrZ
 signal:
