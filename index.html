@@ -5,6 +5,10 @@ description: Morning audio, useful research, and the sources behind both.
 ---
 {% assign sorted_entries = site.entries | sort: 'date' | reverse %}
 {% assign featured = sorted_entries | where: 'section_slug', 'morning-brief' | first %}
+{% assign recurring_entries = sorted_entries | where_exp: "entry", "entry.section_slug == 'daily-news' or entry.section_slug == 'morning-brief'" %}
+{% assign latest_recurring_day = recurring_entries.first.date | date: "%Y-%m-%d" %}
+{% assign latest_recurring_epoch = latest_recurring_day | date: "%s" | plus: 0 %}
+{% assign recurring_cutoff_epoch = latest_recurring_epoch | minus: 345600 %}
 <section class="hero" style="background-image: url('{{ '/assets/images/curious-signal-masthead.jpg' | relative_url }}')">
   <div class="hero-scrim"></div>
   <div class="hero-inner">
@@ -23,59 +27,46 @@ description: Morning audio, useful research, and the sources behind both.
   </div>
 </section>
 
-<section class="archive" id="editions">
+<section class="archive recent-editions" id="editions">
   <div class="section-heading">
     <div>
-      <p class="eyebrow">The archive</p>
+      <p class="eyebrow">Latest from the archive</p>
       <h2>Recent editions</h2>
     </div>
     <p>Brief enough to hear. Deep enough to follow.</p>
   </div>
-  <div class="archive-tools">
-    <div class="section-tabs" role="group" aria-label="Filter by edition type">
-      <button type="button" class="is-active" data-filter="all" aria-pressed="true">All</button>
-      <button type="button" data-filter="daily-news" aria-pressed="false">News</button>
-      <button type="button" data-filter="morning-brief" aria-pressed="false">Morning brief</button>
-      <button type="button" data-filter="research-summary" aria-pressed="false">Research summary</button>
-      <button type="button" data-filter="deep-research" aria-pressed="false">Deep research</button>
-    </div>
-    <label class="archive-search">
-      <span class="sr-only">Search editions</span>
-      <span aria-hidden="true">⌕</span>
-      <input type="search" id="archive-search" placeholder="Search editions" autocomplete="off">
-    </label>
-  </div>
-  <p class="archive-status" id="archive-status" aria-live="polite"></p>
-  {% assign section_defs = "daily-news|Daily News,morning-brief|Morning Brief,research-summary|Research Summary,deep-research|Deep Research" | split: "," %}
-  {% for section_def in section_defs %}
+  {% assign recurring_section_defs = "daily-news|Daily News,morning-brief|Morning Brief" | split: "," %}
+  {% for section_def in recurring_section_defs %}
     {% assign section_parts = section_def | split: "|" %}
     {% assign section_slug = section_parts[0] %}
     {% assign section_label = section_parts[1] %}
-    <div class="archive-group" id="{{ section_slug }}">
+    {% assign section_entries = sorted_entries | where: "section_slug", section_slug %}
+    <div class="recent-group" id="{{ section_slug }}">
       <h3 class="archive-group-title">{{ section_label }}</h3>
-      {% for entry in sorted_entries %}
-        {% if entry.section_slug == section_slug %}
-      <article class="entry-card" data-section="{{ entry.section_slug }}" data-search="{{ entry.title | downcase }} {{ entry.description | downcase }} {{ entry.section | downcase }}">
-        <time class="card-date" datetime="{{ entry.date | date_to_xmlschema }}">
-          <span>{{ entry.date | date: "%b" }}</span>
-          <strong>{{ entry.date | date: "%-d" }}</strong>
-          <small>{{ entry.date | date: "%Y" }}</small>
-        </time>
-        <div class="card-copy">
-          <p class="card-kicker">{{ entry.section }}</p>
-          <h3><a href="{{ entry.url | relative_url }}">{{ entry.title }}</a></h3>
-          <p>{{ entry.description | strip_newlines | truncatewords: 36 }}</p>
-          <div class="card-meta">
-            {% if entry.audio %}<span>▶ {{ entry.duration }}</span>{% else %}<span>Text edition</span>{% endif %}
-            <span>{{ entry.read_time }} read</span>
-          </div>
-        </div>
-        <a class="card-arrow" href="{{ entry.url | relative_url }}" aria-label="Open {{ entry.title }}">→</a>
-      </article>
+      {% for entry in section_entries %}
+        {% assign entry_epoch = entry.date | date: "%s" | plus: 0 %}
+        {% if entry_epoch >= recurring_cutoff_epoch %}
+          {% include entry-card.html entry=entry %}
         {% endif %}
       {% endfor %}
     </div>
   {% endfor %}
+  {% assign research_section_defs = "research-summary|Research Summary,deep-research|Deep Research" | split: "," %}
+  {% for section_def in research_section_defs %}
+    {% assign section_parts = section_def | split: "|" %}
+    {% assign section_slug = section_parts[0] %}
+    {% assign section_label = section_parts[1] %}
+    {% assign section_entries = sorted_entries | where: "section_slug", section_slug %}
+    <div class="recent-group" id="{{ section_slug }}">
+      <h3 class="archive-group-title">{{ section_label }}</h3>
+      {% for entry in section_entries limit: 15 %}
+        {% include entry-card.html entry=entry %}
+      {% endfor %}
+    </div>
+  {% endfor %}
+  <div class="archive-cta">
+    <a href="{{ '/archive/' | relative_url }}">Browse the complete archive <span aria-hidden="true">→</span></a>
+  </div>
 </section>
 
 <section class="manifesto-band">

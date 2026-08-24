@@ -6,6 +6,20 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class EntryLayoutTests(unittest.TestCase):
+    def test_research_youtube_identity_renders_a_privacy_enhanced_player(self) -> None:
+        layout = (ROOT / "_layouts" / "entry.html").read_text(encoding="utf-8")
+        stylesheet = (ROOT / "assets" / "css" / "style.css").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("{% if page.youtube_id %}", layout)
+        self.assertIn("https://www.youtube-nocookie.com/embed/{{ page.youtube_id }}", layout)
+        self.assertIn('loading="lazy"', layout)
+        self.assertIn('title="Watch {{ page.title | escape }} on YouTube"', layout)
+        self.assertIn("allowfullscreen", layout)
+        self.assertIn("Watch on YouTube ↗", layout)
+        self.assertIn(".video-frame { overflow: hidden; aspect-ratio: 16 / 9;", stylesheet)
+
     def test_entry_titles_use_compact_responsive_scale(self) -> None:
         stylesheet = (ROOT / "assets/css/style.css").read_text(encoding="utf-8")
 

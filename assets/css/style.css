@@ -89,6 +89,7 @@ img { max-width: 100%; }
 .archive { max-width: var(--content); margin: 0 auto; padding: 92px 24px 110px; }
 .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 40px; padding-bottom: 34px; }
 .section-heading h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 48px; line-height: 1; font-weight: 500; }
+.section-heading h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 58px; line-height: 1; font-weight: 500; }
 .section-heading > p { max-width: 330px; margin: 0; color: var(--muted); text-align: right; }
 .eyebrow { color: var(--signal); }
 .archive-tools { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 0 0 18px; border-bottom: 1px solid var(--ink); }
@@ -101,6 +102,11 @@ img { max-width: 100%; }
 .archive-group { scroll-margin-top: 24px; }
 .archive-group[hidden], .entry-card[hidden] { display: none; }
 .archive-group-title { margin: 46px 0 0; padding-bottom: 14px; border-bottom: 1px solid var(--ink); font-size: 14px; text-transform: uppercase; }
+.archive-year-title { margin: 64px 0 0; font-family: Georgia, "Times New Roman", serif; font-size: 44px; font-weight: 500; line-height: 1; }
+.archive-year:first-of-type .archive-year-title { margin-top: 42px; }
+.archive-cta { margin-top: 54px; text-align: right; }
+.archive-cta a { color: var(--signal); font-weight: 760; text-decoration: none; }
+.archive-cta a:hover { text-decoration: underline; }
 .entry-card { min-height: 190px; display: grid; grid-template-columns: 72px minmax(0, 1fr) 44px; gap: 28px; align-items: start; padding: 32px 0; border-bottom: 1px solid var(--line); }
 .card-date { color: var(--muted); text-transform: uppercase; line-height: 1; }
 .card-date span { display: block; font-size: 11px; font-weight: 800; }
@@ -132,6 +138,12 @@ img { max-width: 100%; }
 .player-wrap p { margin: 0 0 10px; font-size: 13px; font-weight: 800; text-transform: uppercase; }
 .text-edition-note { display: flex; flex-direction: column; gap: 2px; margin-top: 36px; padding: 20px 22px; border-left: 5px solid var(--sun); background: var(--soft); }
 .text-edition-note span { color: var(--muted); font-size: 14px; }
+.video-player { margin-top: 36px; }
+.video-player > p { margin: 0 0 10px; font-size: 13px; font-weight: 800; text-transform: uppercase; }
+.video-frame { overflow: hidden; aspect-ratio: 16 / 9; background: var(--ink); }
+.video-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
+.video-player > a { display: inline-block; margin-top: 12px; color: var(--signal); font-size: 14px; font-weight: 750; text-decoration: none; }
+.video-player > a:hover { text-decoration: underline; }
 .signal-box { margin-top: 20px; padding: 22px 24px; border: 1px solid var(--line); background: #fff; }
 .signal-box > p { margin: 0 0 12px; color: var(--teal); font-size: 12px; font-weight: 800; text-transform: uppercase; }
 .signal-box ul { margin: 0; padding-left: 20px; }
@@ -179,10 +191,13 @@ img { max-width: 100%; }
   .archive { padding: 68px 18px 80px; }
   .section-heading { display: block; padding-bottom: 26px; }
   .section-heading h2 { font-size: 40px; }
+  .section-heading h1 { font-size: 46px; }
   .section-heading > p { margin-top: 14px; text-align: left; }
   .archive-tools { display: block; }
   .section-tabs { padding-bottom: 14px; }
   .archive-search { min-width: 0; width: 100%; }
+  .archive-year-title { margin-top: 50px; font-size: 36px; }
+  .archive-cta { text-align: left; }
   .entry-card { grid-template-columns: 52px minmax(0, 1fr); gap: 16px; min-height: 0; padding: 26px 0; }
   .card-copy h3 { font-size: 25px; }
   .card-copy > p { font-size: 15px; }
