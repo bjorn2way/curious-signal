@@ -11,6 +11,9 @@
 - Added responsive, lazy-loaded `youtube-nocookie.com` players for future
   Research entries carrying a validated `youtube_id`, with a normal primary
   source fallback link. Existing entries were not backfilled.
+- Added a pull-request-only GitHub Pages build over a controlled collection so
+  homepage bounds, complete archive ordering, stable permalinks, feed limits,
+  and the rendered Research player are verified before merge without deploying.
 
 ## 2026-07-16 · External link navigation
 

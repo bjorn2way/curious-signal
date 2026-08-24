@@ -50,6 +50,18 @@ GitHub Pages builds this with Jekyll. With Ruby and Bundler already available:
 bundle exec jekyll serve
 ```
 
+Pull requests also run the official GitHub Pages Jekyll builder against a
+controlled synthetic collection, then inspect the rendered homepage, archive,
+Research video entry, permalinks, and feed:
+
+```sh
+JEKYLL_SITE_DIR=/absolute/path/to/_site-test \
+  python3 -m unittest tests.test_rendered_site -v
+```
+
+`tests/build_render_fixture.py` prepares the isolated source collection used by
+that workflow. It never changes the real `_entries/` collection.
+
 The public production URL is configured for:
 
 `https://bumblebee-agent.github.io/curious-signal/`
