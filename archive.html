@@ -1,0 +1,47 @@
+---
+layout: default
+title: Archive
+description: Browse every available Curious Signal edition by year and month.
+permalink: /archive/
+---
+{% assign sorted_entries = site.entries | sort: 'date' | reverse %}
+{% assign year_groups = sorted_entries | group_by_exp: "entry", "entry.date | date: '%Y'" %}
+<section class="archive archive-page" id="editions">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">The archive</p>
+      <h1>Every edition</h1>
+    </div>
+    <p>Browse the complete public collection by year, month, or edition type.</p>
+  </div>
+  <div class="archive-tools">
+    <div class="section-tabs" role="group" aria-label="Filter by edition type">
+      <button type="button" class="is-active" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" data-filter="daily-news" aria-pressed="false">News</button>
+      <button type="button" data-filter="morning-brief" aria-pressed="false">Morning brief</button>
+      <button type="button" data-filter="research-summary" aria-pressed="false">Research summary</button>
+      <button type="button" data-filter="deep-research" aria-pressed="false">Deep research</button>
+    </div>
+    <label class="archive-search">
+      <span class="sr-only">Search editions</span>
+      <span aria-hidden="true">⌕</span>
+      <input type="search" id="archive-search" placeholder="Search editions" autocomplete="off">
+    </label>
+  </div>
+  <p class="archive-status" id="archive-status" aria-live="polite"></p>
+  {% for year in year_groups %}
+    {% assign month_groups = year.items | group_by_exp: "entry", "entry.date | date: '%Y-%m'" %}
+    <section class="archive-group archive-year" aria-labelledby="archive-year-{{ year.name }}">
+      <h2 class="archive-year-title" id="archive-year-{{ year.name }}">{{ year.name }}</h2>
+      {% for month in month_groups %}
+        {% assign month_name = month.items.first.date | date: "%B" %}
+        <section class="archive-group archive-month" id="archive-{{ month.name }}" aria-labelledby="archive-month-{{ month.name }}">
+          <h3 class="archive-group-title" id="archive-month-{{ month.name }}">{{ month_name }}</h3>
+          {% for entry in month.items %}
+            {% include entry-card.html entry=entry %}
+          {% endfor %}
+        </section>
+      {% endfor %}
+    </section>
+  {% endfor %}
+</section>

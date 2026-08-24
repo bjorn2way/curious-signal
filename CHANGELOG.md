@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-08-25 · Bounded archive and Research video
+
+- Limited the homepage to the latest five-day recurring window and the newest
+  15 entries in each Research section, while preserving the newest Morning
+  Brief player.
+- Added a complete `/archive/` grouped by year and month with the existing
+  section filters, text search, accessible result status, and shared compact
+  edition cards.
+- Added responsive, lazy-loaded `youtube-nocookie.com` players for future
+  Research entries carrying a validated `youtube_id`, with a normal primary
+  source fallback link. Existing entries were not backfilled.
+- Added a pull-request-only GitHub Pages build over a controlled collection so
+  homepage bounds, complete archive ordering, stable permalinks, feed limits,
+  and the rendered Research player are verified before merge without deploying.
+
 ## 2026-07-16 · External link navigation
 
 - Added one shared site-shell rule that opens external HTTP and HTTPS links in

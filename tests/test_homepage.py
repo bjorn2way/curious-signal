@@ -7,6 +7,21 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class HomepageLatestListenTests(unittest.TestCase):
+    def test_homepage_shows_only_the_bounded_recent_collection(self) -> None:
+        homepage = (ROOT / "index.html").read_text(encoding="utf-8")
+
+        self.assertIn("recurring_cutoff_epoch", homepage)
+        self.assertIn("minus: 345600", homepage)
+        self.assertIn("{% break %}", homepage)
+        self.assertNotIn("where_exp", homepage)
+        self.assertIn(
+            '"research-summary|Research Summary,deep-research|Deep Research"',
+            homepage,
+        )
+        self.assertEqual(homepage.count("limit: 15"), 1)
+        self.assertIn("href=\"{{ '/archive/' | relative_url }}\"", homepage)
+        self.assertNotIn('id="archive-search"', homepage)
+
     def test_latest_listen_uses_newest_morning_brief(self) -> None:
         homepage = (ROOT / "index.html").read_text(encoding="utf-8")
 
@@ -39,12 +54,12 @@ class HomepageLatestListenTests(unittest.TestCase):
         self.assertTrue(newest.get("duration"))
 
     def test_archive_cards_render_bounded_excerpts(self) -> None:
-        homepage = (ROOT / "index.html").read_text(encoding="utf-8")
+        card = (ROOT / "_includes" / "entry-card.html").read_text(encoding="utf-8")
         stylesheet = (ROOT / "assets/css/style.css").read_text(encoding="utf-8")
 
         self.assertIn(
-            "{{ entry.description | strip_newlines | truncatewords: 36 }}",
-            homepage,
+            "{{ include.entry.description | strip_newlines | truncatewords: 36 }}",
+            card,
         )
         self.assertIn("-webkit-line-clamp: 3", stylesheet)
 

@@ -1,5 +1,6 @@
 _site/
+.test-site/
+_site-test/
 .jekyll-cache/
 .sass-cache/
 .DS_Store
-

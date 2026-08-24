@@ -3,7 +3,7 @@ layout: default
 ---
 <article class="entry-shell">
   <header class="entry-header">
-    <a class="back-link" href="{{ '/' | relative_url }}#editions">← All editions</a>
+    <a class="back-link" href="{{ '/archive/' | relative_url }}">← All editions</a>
     <p class="edition-kicker">{{ page.section }} · {{ page.date | date: "%B %-d, %Y" }}</p>
     <h1>{{ page.title }}</h1>
     <p class="entry-deck">{{ page.description }}</p>
@@ -24,6 +24,21 @@ layout: default
         <strong>Text edition</strong>
         <span>The complete recording did not clear the publishing check.</span>
       </div>
+    {% endif %}
+    {% if page.youtube_id %}
+      <section class="video-player" aria-labelledby="video-heading">
+        <p id="video-heading">Watch the primary source</p>
+        <div class="video-frame">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/{{ page.youtube_id }}"
+            title="Watch {{ page.title | escape }} on YouTube"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="encrypted-media; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <a href="{{ page.primary_source }}" rel="noopener noreferrer">Watch on YouTube ↗</a>
+      </section>
     {% endif %}
     {% if page.signal %}
       <section class="signal-box" aria-labelledby="signal-heading">

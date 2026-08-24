@@ -1,0 +1,17 @@
+<article class="entry-card" data-section="{{ include.entry.section_slug }}" data-search="{{ include.entry.title | downcase | escape }} {{ include.entry.description | downcase | escape }} {{ include.entry.section | downcase | escape }}">
+  <time class="card-date" datetime="{{ include.entry.date | date_to_xmlschema }}">
+    <span>{{ include.entry.date | date: "%b" }}</span>
+    <strong>{{ include.entry.date | date: "%-d" }}</strong>
+    <small>{{ include.entry.date | date: "%Y" }}</small>
+  </time>
+  <div class="card-copy">
+    <p class="card-kicker">{{ include.entry.section }}</p>
+    <h3><a href="{{ include.entry.url | relative_url }}">{{ include.entry.title }}</a></h3>
+    <p>{{ include.entry.description | strip_newlines | truncatewords: 36 }}</p>
+    <div class="card-meta">
+      {% if include.entry.audio %}<span>▶ {{ include.entry.duration }}</span>{% else %}<span>Text edition</span>{% endif %}
+      <span>{{ include.entry.read_time }} read</span>
+    </div>
+  </div>
+  <a class="card-arrow" href="{{ include.entry.url | relative_url }}" aria-label="Open {{ include.entry.title }}">→</a>
+</article>
