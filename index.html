@@ -5,9 +5,14 @@ description: Morning audio, useful research, and the sources behind both.
 ---
 {% assign sorted_entries = site.entries | sort: 'date' | reverse %}
 {% assign featured = sorted_entries | where: 'section_slug', 'morning-brief' | first %}
-{% assign recurring_entries = sorted_entries | where_exp: "entry", "entry.section_slug == 'daily-news' or entry.section_slug == 'morning-brief'" %}
-{% assign latest_recurring_day = recurring_entries.first.date | date: "%Y-%m-%d" %}
-{% assign latest_recurring_epoch = latest_recurring_day | date: "%s" | plus: 0 %}
+{% assign latest_recurring_epoch = 0 %}
+{% for entry in sorted_entries %}
+  {% if entry.section_slug == 'daily-news' or entry.section_slug == 'morning-brief' %}
+    {% assign latest_recurring_day = entry.date | date: "%Y-%m-%d" %}
+    {% assign latest_recurring_epoch = latest_recurring_day | date: "%s" | plus: 0 %}
+    {% break %}
+  {% endif %}
+{% endfor %}
 {% assign recurring_cutoff_epoch = latest_recurring_epoch | minus: 345600 %}
 <section class="hero" style="background-image: url('{{ '/assets/images/curious-signal-masthead.jpg' | relative_url }}')">
   <div class="hero-scrim"></div>

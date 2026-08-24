@@ -12,6 +12,8 @@ class HomepageLatestListenTests(unittest.TestCase):
 
         self.assertIn("recurring_cutoff_epoch", homepage)
         self.assertIn("minus: 345600", homepage)
+        self.assertIn("{% break %}", homepage)
+        self.assertNotIn("where_exp", homepage)
         self.assertIn(
             '"research-summary|Research Summary,deep-research|Deep Research"',
             homepage,
